@@ -18,8 +18,8 @@ db.init_app(app)
 def messages():
 # GET: returns a list of all messages as JSON, ordered by created_at in ascending order.
     if request.method == 'GET':
-        messages = Message.query.all()
-        # messages = Message.query.order_by(Message.created_at.asc()).all() ????????
+        # messages = Message.query.all() fromm SOLUTION CODE
+        messages = Message.query.order_by(Message.created_at.asc()).all()
         messages_dict = [message.to_dict() for message in messages]
  
         response = make_response(
@@ -74,7 +74,6 @@ def messages_by_id(id):
                     # ^Deprecated in this python ver
                 for attr in request.get_json():
                     setattr(message, attr, request.get_json()[attr])
-                #WHY OUTSIDE OF FOR in??? 
                 db.session.add(message)
                 db.session.commit()
 
